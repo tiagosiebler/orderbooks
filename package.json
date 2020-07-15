@@ -1,0 +1,31 @@
+{
+  "name": "orderbooks",
+  "version": "1.0.0",
+  "description": "Minimal state stores and handlers for caching multiple exchange:symbol orderbook states in memory",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagosiebler/OrderBooks.git"
+  },
+  "keywords": [
+    "orderbook",
+    "orderbooks",
+    "order",
+    "book",
+    "crypto",
+    "trading",
+    "bybit",
+    "binance",
+    "bitmex",
+    "node"
+  ],
+  "author": "Tiago Siebler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiagosiebler/OrderBooks/issues"
+  },
+  "homepage": "https://github.com/tiagosiebler/OrderBooks#readme"
+}
