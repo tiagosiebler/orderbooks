@@ -14,13 +14,20 @@ Or feed my coffee addiction using any of these:
 ## Project Contributions
 Contributions are very welcome, I will review any incoming pull requests. See the issues tab for todo items.
 
+## Features
+- Handle snapshot and delta orderbook events.
+- Track multiple symbol orderbooks.
+- Easily access best bid/ask prices.
+- Easily access spread percent between bid/ask price.
+- Tiny module with 0 external dependencies.
+
 ## Installation
 ```
 npm install -save orderbooks
 ```
 
 ## Usage
-
+### Tracking
 - Import books store & level
 ```javascript
 const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
@@ -88,7 +95,7 @@ ws.subscribe('orderBookL2_25.BTCUSD');
 
 Example output with `print()` calls to output book state to console:
 ```
----------- BTCUSD ask:bid 9240:9239.5
+---------- BTCUSD ask:bid 9240:9239.5 & spread: 0.01%
 ┌─────────┬──────────┬────────┬────────┬─────────┐
 │ (index) │  symbol  │ price  │  side  │   qty   │
 ├─────────┼──────────┼────────┼────────┼─────────┤
@@ -143,4 +150,28 @@ Example output with `print()` calls to output book state to console:
 │   48    │ 'BTCUSD' │  9228  │ 'Buy'  │  93996  │
 │   49    │ 'BTCUSD' │ 9227.5 │ 'Buy'  │  44058  │
 └─────────┴──────────┴────────┴────────┴─────────┘
+```
+
+### Accessing State
+Access orderbook state using the OrderBooksStore.
+
+```javascript
+const btcOrderBook = OrderBooks.getBook('BTCUSD');
+
+const bestBid = btcOrderBook.getBestBid();
+// bestBid = 9239.5
+
+const secondBestBid = btcOrderBook.getBestBid(1);
+// secondBestBid = 9239
+
+const bestAsk = btcOrderBook.getBestAsk();
+// bestAsk = 9040
+
+const secondBestAsk = btcOrderBook.getBestAsk(1);
+// secondBestAsk = 9040.5
+
+const currentSpread = btcORderBook.getSpreadPercent();
+// currentSpread = 0.01
+
+
 ```

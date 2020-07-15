@@ -126,14 +126,13 @@ class SymbolOrderBook {
    */
   print() {
     const symbol = this.symbol;
-    console.log(`---------- ${symbol} ask:bid ${this.getBestAsk()}:${this.getBestBid()}`);
+    console.log(`---------- ${symbol} ask:bid ${this.getBestAsk()}:${this.getBestBid()} & spread: ${this.getSpreadPercent().toFixed(2)}%`);
     console.table(this.book);
     return this;
   }
 
   /**
    * @public get lowest sell order
-   *
    * @param {number} [n=0] offset from array centre (should be positive)
    * @returns {number} lowest seller price
    */
@@ -146,7 +145,6 @@ class SymbolOrderBook {
 
   /**
    * @public get highest buy order price
-   *
    * @param {number} [n=0] offset from array centre (should be positive)
    * @returns {number} highest buyer price
    */
@@ -154,6 +152,17 @@ class SymbolOrderBook {
     const buySide = this.book.filter(e => e.side == 'Buy');
     const topBuy = buySide[Math.abs(n)];
     return topBuy && topBuy.price;
+  }
+
+  /**
+   * @public get current bid/ask spread percentage
+   * @param {number} [n=0] offset from centre of book
+   * @returns {number} percentage spread between best bid & ask
+   */
+  getSpreadPercent(n = 0) {
+    const ask = this.getBestAsk(n);
+    const bid = this.getBestBid(n);
+    return (1 - (bid / ask)) * 100;
   }
 }
 
