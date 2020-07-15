@@ -11,6 +11,9 @@ Or feed my coffee addiction using any of these:
 - BTC: `1C6GWZL1XW3jrjpPTS863XtZiXL1aTK7Jk`
 - ETH (ERC20): `0xd773d8e6a50758e1ada699bb6c4f98bb4abf82da`
 
+## Project Contributions
+Contributions are very welcome, I will review any incoming pull requests. See the issues tab for todo items.
+
 ## Installation
 ```
 npm install -save orderbooks
