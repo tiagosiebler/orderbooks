@@ -86,13 +86,13 @@ const handleOrderbookUpdate = message => {
   console.error('unhandled orderbook update type: ', type);
 }
 
+// connect to a websocket and relay orderbook events to handlers
 const ws = new WebsocketClient({ livenet: true });
 ws.on('update', message => {
   if (message.topic.toLowerCase().startsWith('orderbook')) {
     return handleOrderbookUpdate(message);
   }
 });
-
 ws.subscribe('orderBookL2_25.BTCUSD');
 ```
 
