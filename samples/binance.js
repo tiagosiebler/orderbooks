@@ -1,7 +1,7 @@
 const Binance = require('node-binance-api');
 const binance = new Binance().options({});
 
-const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
+const { OrderBooksStore, OrderBookLevel } = require('../src');
 
 const OrderBooks = new OrderBooksStore({ traceLog: true, checkTimestamps: false, maxDepth: 50 });
 
@@ -65,7 +65,8 @@ const handleOrderbookUpdate = depth => {
 
 // utility method to decide if a delta level is an upsert or deletion
 const assignLevel = (level, updateArray, deleteArray) => {
-  if (level.qty) {
+  const qtyIndex = 3;
+  if (level[qtyIndex]) {
     updateArray.push(level);
   } else {
     deleteArray.push(level);

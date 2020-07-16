@@ -1,5 +1,5 @@
 const api = require('binance');
-const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
+const { OrderBooksStore, OrderBookLevel } = require('../src');
 
 const binanceWS = new api.BinanceWS(true);
 const binanceRest = new api.BinanceRest({
