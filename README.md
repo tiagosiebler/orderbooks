@@ -23,6 +23,7 @@ Contributions are very welcome, I will review any incoming pull requests. See th
 - Track multiple symbol orderbooks.
 - Easily access best bid/ask prices.
 - Easily access spread percent between bid/ask price.
+- Easily keep orderbook depth trimmed to max depth.
 - Tiny module with 0 external dependencies.
 
 ## Installation
