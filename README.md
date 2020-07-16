@@ -1,4 +1,6 @@
-# OrderBooks Store
+# OrderBooks Store [![npm version](https://img.shields.io/npm/v/orderbooks.svg)][1] [![npm size](https://img.shields.io/bundlephobia/min/orderbooks.svg)][1] [![npm downloads](https://img.shields.io/npm/dt/orderbooks.svg)][1]
+[![CodeFactor](https://www.codefactor.io/repository/github/tiagosiebler/orderbooks/badge)](https://www.codefactor.io/repository/github/tiagosiebler/orderbooks)
+
 
 A minimal set of utilities for handling orderbook snapshots and delta updates, with bybit examples.
 
