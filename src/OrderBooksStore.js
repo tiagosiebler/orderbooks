@@ -8,10 +8,11 @@ class OrderBooksStore {
   /**
    * @param {boolean} traceLog - whether to console log when a snapshot or delta is processed
    */
-  constructor({ traceLog, checkTimestamps }) {
+  constructor({ traceLog, checkTimestamps, maxDepth }) {
     this.books = {};
     this.traceLog = traceLog;
     this.shouldCheckTimestamp = checkTimestamps;
+    this.maxDepth = maxDepth;
   }
 
   /**
@@ -23,7 +24,7 @@ class OrderBooksStore {
       return this.books[symbol];
     }
 
-    return this.books[symbol] = new OrderBook(symbol, { checkTimestamps: this.shouldCheckTimestamp });
+    return this.books[symbol] = new OrderBook(symbol, { checkTimestamps: this.shouldCheckTimestamp, maxDepth: this.maxDepth });
   }
 
   /**
