@@ -38,8 +38,7 @@ const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
 ```
 - Create instance of orderbooks store, to store multiple order books for a broker
 ```javascript
-const traceLog = true;
-const OrderBooks = new OrderBooksStore(traceLog);
+const OrderBooks = new OrderBooksStore({ traceLog: true, checkTimestamps: false });
 ```
 - Feed snapshot and delta updates into OrderBooks.handle() methods.
 
