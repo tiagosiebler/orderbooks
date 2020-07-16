@@ -6,9 +6,9 @@
  * @param {number} qty asset at this level
  */
 const OrderBookLevel = (symbol, price, side, qty, ...extraState) => {
-  const level = { symbol, price, side, qty };
+  const level = [symbol, price, side, qty];
   if (extraState.length) {
-    level.extraState = extraState;
+    level.push(extraState);
   }
   return level;
 }

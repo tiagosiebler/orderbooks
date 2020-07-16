@@ -1,3 +1,11 @@
+const EnumLevelProperty = Object.freeze({
+  symbol: 0,
+  price: 1,
+  side: 2,
+  qty: 3,
+  extraState: 4
+});
+
 /**
  * Storage helper to store/track/manipulate the current state of an orderbook, for a specific symbol
  * @class SymbolOrderBook
@@ -88,7 +96,7 @@ class SymbolOrderBook {
    * @returns {number} index of level in book, if found, else -1
    */
   findIndexForSlice(level) {
-    return this.book.findIndex(e => e.price == level.price);
+    return this.book.findIndex(e => e[EnumLevelProperty.price] == level[EnumLevelProperty.price]);
   }
 
   /**
@@ -109,7 +117,7 @@ class SymbolOrderBook {
    */
   sort() {
     // sorts with lowest price last, highest price first
-    this.book.sort((a, b) => b.price - a.price);
+    this.book.sort((a, b) => b[EnumLevelProperty.price] - a[EnumLevelProperty.price]);
     return this;
   }
 
@@ -124,7 +132,7 @@ class SymbolOrderBook {
     }
 
     const count = book.reduce((acc, level) => {
-      if (level.side == 'Sell') {
+      if (level[EnumLevelProperty.side] == 'Sell') {
         acc.sells++;
         return acc;
       }
@@ -179,8 +187,7 @@ class SymbolOrderBook {
    * @public dump orderbook state to console
    */
   print() {
-    const symbol = this.symbol;
-    console.log(`---------- ${symbol} ask:bid ${this.getBestAsk()}:${this.getBestBid()} & spread: ${this.getSpreadPercent().toFixed(2)}%`);
+    console.log(`---------- ${this.symbol} ask:bid ${this.getBestAsk()}:${this.getBestBid()} & spread: ${this.getSpreadPercent().toFixed(5)}%`);
     console.table(this.book);
     return this;
   }
@@ -199,10 +206,10 @@ class SymbolOrderBook {
    * @returns {number} lowest seller price
    */
   getBestAsk(n = 0) {
-    const sellSide = this.book.filter(e => e.side == 'Sell');
+    const sellSide = this.book.filter(e => e[EnumLevelProperty.side] == 'Sell');
     const index = sellSide.length - 1 - n;
     const bottomSell = sellSide[Math.abs(index)];
-    return bottomSell && bottomSell.price;
+    return bottomSell && bottomSell[EnumLevelProperty.price];
   }
 
   /**
@@ -211,9 +218,9 @@ class SymbolOrderBook {
    * @returns {number} highest buyer price
    */
   getBestBid(n = 0) {
-    const buySide = this.book.filter(e => e.side == 'Buy');
+    const buySide = this.book.filter(e => e[EnumLevelProperty.side] == 'Buy');
     const topBuy = buySide[Math.abs(n)];
-    return topBuy && topBuy.price;
+    return topBuy && topBuy[EnumLevelProperty.price];
   }
 
   /**
