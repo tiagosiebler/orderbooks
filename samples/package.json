@@ -1,0 +1,18 @@
+{
+  "name": "orderbooks-samples",
+  "version": "1.0.0",
+  "description": "Sample implementations with the OrderBooks module",
+  "scripts": {
+    "binance": "node binance.js",
+    "bybit": "node bybit.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "author": "Tiago Siebler",
+  "license": "MIT",
+  "dependencies": {
+    "@pxtrn/bybit-api": "^1.1.5",
+    "node-binance-api": "^0.11.11",
+    "orderbooks": "^1.0.3"
+  }
+}

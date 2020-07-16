@@ -38,63 +38,35 @@ const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
 ```
 - Create instance of orderbooks store, to store multiple order books for a broker
 ```javascript
-const OrderBooks = new OrderBooksStore({ traceLog: true, checkTimestamps: false });
+// all options are optional
+const options = {
+  // output traces on any events sent handled by book
+  traceLog: true,
+
+  // check current timestamp > last timestamp, else deny processing event
+  checkTimestamps: false,
+
+  // max size of orderbook (e.g 50 == 25 bids & 25 asks). Defaults to 250.
+  maxDepth: 50
+};
+
+const OrderBooks = new OrderBooksStore(options);
 ```
 - Feed snapshot and delta updates into OrderBooks.handle() methods.
+## Examples
+See the [./samples/](./samples/) folder for more.
 
-## Real Example - Bybit
+### Real Example - Binance
+See [./samples/binance.js](./samples/binance.js)
+
+### Real Example - Bybit
 - Import modules
 - Prepare OrderBooks store instance
 - Connect to OrderBooks websockets
 - Map event properties to expected key:value pairs
 - Feed mapped snapshot and delta events into OrderBooks.handle() methods
 
-```javascript
-const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
-const { WebsocketClient, DefaultLogger } = require('@pxtrn/bybit-api');
-DefaultLogger.silly = () => {};
-
-const OrderBooks = new OrderBooksStore({ traceLog: true, checkTimestamps: false });
-
-// Low level map of exchange properties to expected local properties
-const mapBybitBookSlice = level => {
-  return OrderBookLevel(level.symbol, +level.price, level.side, level.size);
-};
-
-// parse orderbook messages, detect snapshot vs delta, and format properties using OrderBookLevel
-const handleOrderbookUpdate = message => {
-  const { topic, type, data, timestamp_e6 } = message;
-  const [ topicKey, symbol ] = topic.split('.');
-
-  if (type == 'snapshot') {
-    return OrderBooks.handleSnapshot(symbol, data.map(mapBybitBookSlice), timestamp_e6 / 1000, message).print();
-  }
-
-  if (type == 'delta') {
-    const deleteLevels = data.delete.map(mapBybitBookSlice);
-    const updateLevels = data.update.map(mapBybitBookSlice);
-    const insertLevels = data.insert.map(mapBybitBookSlice);
-    return OrderBooks.handleDelta(
-      symbol,
-      deleteLevels,
-      updateLevels,
-      insertLevels,
-      timestamp_e6 / 1000
-    ).print();
-  }
-
-  console.error('unhandled orderbook update type: ', type);
-}
-
-// connect to a websocket and relay orderbook events to handlers
-const ws = new WebsocketClient({ livenet: true });
-ws.on('update', message => {
-  if (message.topic.toLowerCase().startsWith('orderbook')) {
-    return handleOrderbookUpdate(message);
-  }
-});
-ws.subscribe('orderBookL2_25.BTCUSD');
-```
+See [./samples/bybit.js](./samples/bybit.js)
 
 Example output with `print()` calls to output book state to console:
 ```
@@ -155,7 +127,7 @@ Example output with `print()` calls to output book state to console:
 └─────────┴──────────┴────────┴────────┴─────────┘
 ```
 
-### Accessing State
+## Accessing State
 Access orderbook state using the OrderBooksStore.
 
 ```javascript
@@ -175,6 +147,16 @@ const secondBestAsk = btcOrderBook.getBestAsk(1);
 
 const currentSpread = btcORderBook.getSpreadPercent();
 // currentSpread = 0.01
+```
 
+## Utility Methods
+The following ultity methods are exposed for each book:
+```javascript
+const btcOrderBook = OrderBooks.getBook('BTCUSD');
 
+// console.log current orderbook state
+btcOrderBook.print();
+
+// clear current orderbook to free memory
+btcOrderBook.reset();
 ```

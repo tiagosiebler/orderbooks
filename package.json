@@ -1,6 +1,6 @@
 {
   "name": "orderbooks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Minimal state stores and handlers for caching multiple exchange:symbol orderbook states in memory",
   "main": "src/index.js",
   "scripts": {

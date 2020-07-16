@@ -9,6 +9,7 @@ class SymbolOrderBook {
 
     this.shouldCheckTimestamps = options.checkTimestamps;
     this.lastUpdateTimestamp = new Date().getTime();
+    this.maxDepth = options.maxDepth || 250;
   }
 
   /**
@@ -20,7 +21,7 @@ class SymbolOrderBook {
   handleSnapshot(data, timestamp) {
     this.checkTimestamp();
     this.book = data;
-    return this.sort().trackDidUpdate(timestamp);
+    return this.trimToMaxDepth().sort().trackDidUpdate(timestamp);
   }
 
   /**
@@ -58,7 +59,7 @@ class SymbolOrderBook {
       this.insertLevel(level);
     });
 
-    return this.sort().trackDidUpdate(timestamp);
+    return this.trimToMaxDepth().sort().trackDidUpdate(timestamp);
   }
 
   /**
@@ -113,6 +114,59 @@ class SymbolOrderBook {
   }
 
   /**
+   * @private trim orderbook in place to max depth, evenly across both sides
+   */
+  trimToMaxDepth() {
+    const book = this.book;
+    const maxDepth = this.maxDepth;
+    if (book.length <= maxDepth) {
+      return this;
+    }
+
+    const count = book.reduce((acc, level) => {
+      if (level.side == 'Sell') {
+        acc.sells++;
+        return acc;
+      }
+      acc.buys++;
+      return acc;
+    }, { buys: 0, sells: 0 });
+
+    const maxPerSide = +(maxDepth / 2).toFixed(0);
+
+    const buysToTrim = count.buys - maxPerSide;
+    const sellsToTrim = count.sells - maxPerSide;
+
+    this
+      .sort()
+      .trimSideCount(buysToTrim, false)
+      .trimSideCount(sellsToTrim, true);
+
+    return this;
+  }
+
+  /**
+   * @private trim edges of orderbook to total
+   *
+   * @param {number} [totalToTrim=0]
+   * @param {boolean} shouldTrimTop - if true, trim from array beginning (top = sells) else from array end (bottom = buys)
+   */
+  trimSideCount(totalToTrim = 0, shouldTrimTop) {
+    if (totalToTrim <= 0) {
+      return this;
+    }
+
+    const book = this.book;
+    if (shouldTrimTop) {
+      book.splice(0, totalToTrim);
+      return this;
+    }
+
+    book.splice(book.length - totalToTrim - 1, totalToTrim);
+    return this;
+  }
+
+  /**
    * @private update last updated timestamp
    * @param {number} timestamp
    */
@@ -128,6 +182,14 @@ class SymbolOrderBook {
     const symbol = this.symbol;
     console.log(`---------- ${symbol} ask:bid ${this.getBestAsk()}:${this.getBestBid()} & spread: ${this.getSpreadPercent().toFixed(2)}%`);
     console.table(this.book);
+    return this;
+  }
+
+  /**
+   * @public empty current orderbook store to free memory
+   */
+  reset() {
+    this.book = [];
     return this;
   }
 
