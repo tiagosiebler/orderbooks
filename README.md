@@ -10,10 +10,18 @@ A minimal set of utilities for handling orderbook snapshots and delta updates, w
 ## Issues & Discussion
 - Issues? Check the [issues tab](https://github.com/tiagosiebler/orderbooks/issues).
 - Discuss & collaborate with other node devs? Join our [Node.js Algo Traders](https://t.me/nodetraders) engineering community on telegram.
+
+## Related projects
+Check out my related projects:
 - Try my connectors:
   - [ftx-api](https://www.npmjs.com/package/ftx-api)
   - [bybit-api](https://www.npmjs.com/package/bybit-api)
   - [binance](https://www.npmjs.com/package/binance)
+- Try my misc utilities:
+  - [orderbooks](https://www.npmjs.com/package/orderbooks)
+- Check out my examples:
+  - [awesome-crypto-examples](https://github.com/tiagosiebler/awesome-crypto-examples)
+
 
 ## Contributions & Thanks
 If you found this project interesting or useful, [sponsor me](https://github.com/sponsors/tiagosiebler) on github, create accounts with my referral links:
