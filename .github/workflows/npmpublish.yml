@@ -28,6 +28,8 @@ jobs:
         id: version-updated
         with:
           path: package.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v2
         if: steps.version-updated.outputs.has-updated
