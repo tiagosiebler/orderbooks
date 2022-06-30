@@ -66,9 +66,9 @@ export class OrderBooksStore {
    */
   public handleDelta(
     symbol: string,
-    deleteLevels: OrderBookLevelState | [] | undefined,
-    updateLevels: OrderBookLevelState | [] | undefined,
-    insertLevels: OrderBookLevelState | [] | undefined,
+    deleteLevels: OrderBookLevelState[] | undefined,
+    updateLevels: OrderBookLevelState[] | undefined,
+    insertLevels: OrderBookLevelState[] | undefined,
     timestamp: number = Date.now(),
   ): OrderBook {
     if (this.traceLog) {

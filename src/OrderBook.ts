@@ -58,9 +58,9 @@ export default class OrderBook {
    * @param {number} timestamp
    */
   public handleDelta(
-    deleteDelta: OrderBookLevelState | [] = [],
-    updateDelta: OrderBookLevelState | [] = [],
-    insertDelta: OrderBookLevelState | [] = [],
+    deleteDelta: OrderBookLevelState[] = [],
+    updateDelta: OrderBookLevelState[] = [],
+    insertDelta: OrderBookLevelState[] = [],
     timestamp: number = Date.now(),
   ): this {
     this.checkTimestamp(timestamp);
