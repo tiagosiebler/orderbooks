@@ -1,4 +1,4 @@
-const { WebsocketClient, DefaultLogger } = require('@pxtrn/bybit-api');
+const { WebsocketClient, DefaultLogger } = require('bybit-api');
 const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
 
 const OrderBooks = new OrderBooksStore({ traceLog: true, checkTimestamps: false });
@@ -14,9 +14,9 @@ ws.on('update', message => {
 ws.subscribe('orderBookL2_25.BTCUSD');
 
 // parse orderbook messages, detect snapshot vs delta, and format properties using OrderBookLevel
-const handleOrderbookUpdate = message => {
+function handleOrderbookUpdate(message) {
   const { topic, type, data, timestamp_e6 } = message;
-  const [ topicKey, symbol ] = topic.split('.');
+  const [topicKey, symbol] = topic.split('.');
 
   if (type == 'snapshot') {
     return OrderBooks.handleSnapshot(symbol, data.map(mapBybitBookSlice), timestamp_e6 / 1000, message).print();
@@ -39,6 +39,6 @@ const handleOrderbookUpdate = message => {
 }
 
 // Low level map of exchange properties to expected local properties
-const mapBybitBookSlice = level => {
+function mapBybitBookSlice(level) {
   return OrderBookLevel(level.symbol, +level.price, level.side, level.size);
-};
+}

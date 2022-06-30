@@ -28,8 +28,6 @@ jobs:
         id: version-updated
         with:
           path: package.json
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v2
         if: steps.version-updated.outputs.has-updated
@@ -40,8 +38,13 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
 
-      #- run: npm ci
-      - run: npm publish
+      - run: npm ci --ignore-scripts
+        if: steps.version-updated.outputs.has-updated
+      - run: npm run clean
+        if: steps.version-updated.outputs.has-updated
+      - run: npm run build
+        if: steps.version-updated.outputs.has-updated
+      - run: npm publish --ignore-scripts
         if: steps.version-updated.outputs.has-updated
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
