@@ -14,14 +14,15 @@ A minimal set of utilities for handling orderbook snapshots and delta updates, w
 ## Related projects
 Check out my related projects:
 - Try my connectors:
-  - [ftx-api](https://www.npmjs.com/package/ftx-api)
-  - [bybit-api](https://www.npmjs.com/package/bybit-api)
   - [binance](https://www.npmjs.com/package/binance)
+  - [bybit-api](https://www.npmjs.com/package/bybit-api)
+  - [okx-api](https://www.npmjs.com/package/okx-api)
+  - [bitget-api](https://www.npmjs.com/package/bitget-api)
+  - [ftx-api](https://www.npmjs.com/package/ftx-api)
 - Try my misc utilities:
   - [orderbooks](https://www.npmjs.com/package/orderbooks)
 - Check out my examples:
   - [awesome-crypto-examples](https://github.com/tiagosiebler/awesome-crypto-examples)
-
 
 ## Contributions & Thanks
 If you found this project interesting or useful, [sponsor me](https://github.com/sponsors/tiagosiebler) on github, create accounts with my referral links:
@@ -178,3 +179,7 @@ btcOrderBook.print();
 // clear current orderbook to free memory
 btcOrderBook.reset();
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tiagosiebler/ftx-api,tiagosiebler/bybit-api,tiagosiebler/binance,tiagosiebler/orderbooks,tiagosiebler/okx-api,tiagosiebler/awesome-crypto-examples&type=Date)](https://star-history.com/#tiagosiebler/ftx-api&tiagosiebler/bybit-api&tiagosiebler/binance&tiagosiebler/orderbooks&tiagosiebler/okx-api&tiagosiebler/awesome-crypto-examples&Date)
