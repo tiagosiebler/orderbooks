@@ -45,7 +45,7 @@ export class OrderBooksStore {
    */
   public handleSnapshot(
     symbol: string,
-    data: OrderBookLevelState,
+    data: OrderBookLevelState[],
     timestamp: number = Date.now(),
   ): OrderBook {
     if (this.traceLog) {
