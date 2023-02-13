@@ -39,9 +39,9 @@ export class OrderBooksStore {
    * @public Store/replace existing orderbook state in-memory
    *
    * @param {string} symbol
-   * @param {Array} current orderbook snapshot represented as array, where each child element is a level in the orderbook
+   * @param {Array} data current orderbook snapshot represented as array, where each child element is a level in the orderbook
    * @param {number} timestamp
-   * @returns {OrderBook} that handled this event
+   * @returns {OrderBook} store instance that handled this event
    */
   public handleSnapshot(
     symbol: string,
@@ -62,7 +62,7 @@ export class OrderBooksStore {
    * @param {Array} updateLevels - array with levels to update
    * @param {Array} insertLevels - array with levels to insert
    * @param {number} timestamp
-   * @returns {OrderBook} that handled this event
+   * @returns {OrderBook} store instance that handled this event
    */
   public handleDelta(
     symbol: string,
