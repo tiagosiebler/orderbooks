@@ -40,7 +40,7 @@ Contributions are very welcome, I will review any incoming pull requests. See th
 - Handle snapshot and delta orderbook events.
 - Track multiple symbol orderbooks.
 - Easily access best bid/ask prices.
-- Easily access spread percent between bid/ask price.
+- Conveniently access the difference between the best bid and ask prices, with the spread represented in basis point units.
 - Easily keep orderbook depth trimmed to max depth.
 - Tiny module with 0 external dependencies.
 

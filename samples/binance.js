@@ -1,7 +1,7 @@
 const Binance = require('node-binance-api');
 const binance = new Binance().options({});
 
-const { OrderBooksStore, OrderBookLevel } = require('../src');
+const { OrderBooksStore, OrderBookLevel } = require('../lib');
 
 const OrderBooks = new OrderBooksStore({ traceLog: true, checkTimestamps: false, maxDepth: 50 });
 
