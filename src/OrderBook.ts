@@ -264,6 +264,21 @@ export default class OrderBook {
     return topBuy ? topBuy[EnumLevelProperty.price] : null;
   }
 
+   /**
+   * get current bid/ask spread percentage
+   * @param {number} [n=0] offset from centre of book
+   * @returns {number} percentage spread between best bid & ask
+   */
+   public getSpreadPercent(n = 0): number | null {
+    const ask = this.getBestAsk(n);
+    const bid = this.getBestBid(n);
+
+    if (!bid || !ask) {
+      return null;
+    }
+    return (1 - bid / ask) * 100;
+  }
+
   /**  
    * get current bid/ask spread in basis points  
    * @param {number} [n=0] offset from centre of book  
@@ -277,6 +292,6 @@ export default class OrderBook {
       return null;  
     }  
     // calculate spread in basis points  
-    return ((1 - bid / ask) * 100) * 100;  
+    return (1 - bid / ask) * 10000;  
   }  
 }
