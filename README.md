@@ -37,7 +37,7 @@ If you found this project interesting or useful, [sponsor me](https://github.com
 - [Bybit](https://www.bybit.com/en-US/register?affiliate_id=9410&language=en-US&group_id=0&group_type=1)
 - [Binance](https://www.binance.com/en/register?ref=20983262)
 
-For more ways to give thanks & support my efforts, visit [Contributions & Thanks](https://github.com/tiagosiebler/awesome-crypto-examples/wiki/Contributions-&-thanks)!
+For more ways to give thanks & support my efforts, visit [Contributions & Thanks](https://github.com/tiagosiebler/awesome-crypto-examples/wiki/Contributions-&-Thanks)!
 
 ## Project Contributions
 
