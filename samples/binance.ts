@@ -5,7 +5,8 @@ import {
   OrderBookResponse,
   WebsocketClient,
 } from 'binance';
-import { OrderBookLevel, OrderBooksStore } from '../src';
+// import { OrderBookLevel, OrderBooksStore } from '../src';
+import { OrderBookLevel, OrderBooksStore } from 'orderbooks';
 
 const binanceWs = new WebsocketClient({
   beautify: true,
