@@ -1,21 +1,17 @@
 {
   "root": true,
   "plugins": ["@typescript-eslint"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "files": ["*.ts", "*.tsx"], // Your TypeScript files extension
-    "project": ["tsconfig.json"],
+    "project": ["tsconfig.json", "tsconfig.samples.json"],
     "projectFolderIgnoreList": ["/node_modules/", "/dist/", "/scripts/"]
   },
   "rules": {
     // Enabled: typescript
     "no-param-reassign": ["error"],
     "@typescript-eslint/await-thenable": "error",
-    "@typescript-eslint/dot-notation": "error",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/no-var-requires": "error",

@@ -53,13 +53,13 @@ export default class OrderBook {
    * @public Process orderbook delta change, either deleting, updating or inserting level data into the existing book. Price is used on each level to find existing index in tracked book state.
    *
    * @param {Array} [deleteDelta=[]] levels to delete
-   * @param {Array} [updateDelta=[]] levels to update
+   * @param {Array} [upsertDelta=[]] levels to update (will automatically insert if level does not exist)
    * @param {Array} [insertDelta=[]] levels to insert
    * @param {number} timestamp
    */
   public handleDelta(
     deleteDelta: OrderBookLevelState[] = [],
-    updateDelta: OrderBookLevelState[] = [],
+    upsertDelta: OrderBookLevelState[] = [],
     insertDelta: OrderBookLevelState[] = [],
     timestamp: number = Date.now(),
   ): this {
@@ -72,7 +72,7 @@ export default class OrderBook {
       }
     });
 
-    updateDelta.forEach((level) => {
+    upsertDelta.forEach((level) => {
       const existingIndex = this.findIndexForSlice(level);
       if (existingIndex !== -1) {
         this.replaceLevelAtIndex(existingIndex, level);
@@ -209,27 +209,27 @@ export default class OrderBook {
   }
 
   /** dump orderbook state to console */
-  public print() {  
-    // console.clear();  
-    console.log(  
-      `---------- ${  
-        this.symbol  
-      } ask:bid ${this.getBestAsk()}:${this.getBestBid()} & spread: ${this.getSpreadBasisPoints()?.toFixed(  
-        5,  
-      )} bp`,  
-    );  
-  
-    // Map the book to a new format for console.table  
-    const formattedBook = this.book.map((level) => ({  
-        'symbol': level[EnumLevelProperty.symbol],  
-        'price': level[EnumLevelProperty.price],  
-        'side': level[EnumLevelProperty.side],  
-        'qty': level[EnumLevelProperty.qty]  
-    }));  
-    console.table(formattedBook);  
-      
-    return this;  
-}  
+  public print() {
+    // console.clear();
+    console.log(
+      `---------- ${
+        this.symbol
+      } ask:bid ${this.getBestAsk()}:${this.getBestBid()} & spread: ${this.getSpreadBasisPoints()?.toFixed(
+        5,
+      )} bp`,
+    );
+
+    // Map the book to a new format for console.table
+    const formattedBook = this.book.map((level) => ({
+      symbol: level[EnumLevelProperty.symbol],
+      price: level[EnumLevelProperty.price],
+      side: level[EnumLevelProperty.side],
+      qty: level[EnumLevelProperty.qty],
+    }));
+    console.table(formattedBook);
+
+    return this;
+  }
 
   /** empty current orderbook store to free memory */
   public reset() {
@@ -264,12 +264,12 @@ export default class OrderBook {
     return topBuy ? topBuy[EnumLevelProperty.price] : null;
   }
 
-   /**
+  /**
    * get current bid/ask spread percentage
    * @param {number} [n=0] offset from centre of book
    * @returns {number} percentage spread between best bid & ask
    */
-   public getSpreadPercent(n = 0): number | null {
+  public getSpreadPercent(n = 0): number | null {
     const ask = this.getBestAsk(n);
     const bid = this.getBestBid(n);
 
@@ -279,19 +279,19 @@ export default class OrderBook {
     return (1 - bid / ask) * 100;
   }
 
-  /**  
-   * get current bid/ask spread in basis points  
-   * @param {number} [n=0] offset from centre of book  
-   * @returns {number} spread between best bid & ask in basis points  
-   */  
-  public getSpreadBasisPoints(n = 0): number | null {  
-    const ask = this.getBestAsk(n);  
-    const bid = this.getBestBid(n);  
-    
-    if (!bid || !ask) {  
-      return null;  
-    }  
-    // calculate spread in basis points  
-    return (1 - bid / ask) * 10000;  
-  }  
+  /**
+   * get current bid/ask spread in basis points
+   * @param {number} [n=0] offset from centre of book
+   * @returns {number} spread between best bid & ask in basis points
+   */
+  public getSpreadBasisPoints(n = 0): number | null {
+    const ask = this.getBestAsk(n);
+    const bid = this.getBestBid(n);
+
+    if (!bid || !ask) {
+      return null;
+    }
+    // calculate spread in basis points
+    return (1 - bid / ask) * 10000;
+  }
 }

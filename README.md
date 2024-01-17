@@ -1,18 +1,24 @@
-
 # OrderBooks Store [![npm version](https://img.shields.io/npm/v/orderbooks.svg)][1] [![npm size](https://img.shields.io/bundlephobia/min/orderbooks.svg)][1] [![npm downloads](https://img.shields.io/npm/dt/orderbooks.svg)][1]
+
 [![CodeFactor](https://www.codefactor.io/repository/github/tiagosiebler/orderbooks/badge)](https://www.codefactor.io/repository/github/tiagosiebler/orderbooks)
 
 [1]: https://www.npmjs.com/package/orderbooks
 
 A minimal set of utilities for handling orderbook snapshots and delta updates, with bybit examples.
 
-
 ## Issues & Discussion
+
 - Issues? Check the [issues tab](https://github.com/tiagosiebler/orderbooks/issues).
 - Discuss & collaborate with other node devs? Join our [Node.js Algo Traders](https://t.me/nodetraders) engineering community on telegram.
 
+## Documentation
+
+- [TSDoc Documentation (generated using typedoc via npm module)](https://tsdocs.dev/docs/orderbooks)
+
 ## Related projects
+
 Check out my related projects:
+
 - Try my connectors:
   - [binance](https://www.npmjs.com/package/binance)
   - [bybit-api](https://www.npmjs.com/package/bybit-api)
@@ -25,18 +31,20 @@ Check out my related projects:
   - [awesome-crypto-examples](https://github.com/tiagosiebler/awesome-crypto-examples)
 
 ## Contributions & Thanks
+
 If you found this project interesting or useful, [sponsor me](https://github.com/sponsors/tiagosiebler) on github, create accounts with my referral links:
+
 - [Bybit](https://www.bybit.com/en-US/register?affiliate_id=9410&language=en-US&group_id=0&group_type=1)
 - [Binance](https://www.binance.com/en/register?ref=20983262)
 
-Or buy me a coffee:
-- BTC: `1C6GWZL1XW3jrjpPTS863XtZiXL1aTK7Jk`
-- ETH (ERC20): `0xd773d8e6a50758e1ada699bb6c4f98bb4abf82da`
+For more ways to give thanks & support my efforts, visit [Contributions & Thanks](https://github.com/tiagosiebler/awesome-crypto-examples/wiki/Contributions-&-Thanks)!
 
 ## Project Contributions
+
 Contributions are very welcome, I will review any incoming pull requests. See the issues tab for todo items.
 
 ## Features
+
 - Handle snapshot and delta orderbook events.
 - Track multiple symbol orderbooks.
 - Easily access best bid/ask prices.
@@ -45,17 +53,23 @@ Contributions are very welcome, I will review any incoming pull requests. See th
 - Tiny module with 0 external dependencies.
 
 ## Installation
+
 ```
 npm install -save orderbooks
 ```
 
 ## Usage
+
 ### Tracking
+
 - Import books store & level
+
 ```javascript
 const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
 ```
+
 - Create instance of orderbooks store, to store multiple order books for a broker
+
 ```javascript
 // all options are optional
 const options = {
@@ -66,28 +80,34 @@ const options = {
   checkTimestamps: false,
 
   // max size of orderbook (e.g 50 == 25 bids & 25 asks). Defaults to 250.
-  maxDepth: 50
+  maxDepth: 50,
 };
 
 const OrderBooks = new OrderBooksStore(options);
 ```
+
 - Feed snapshot and delta updates into OrderBooks.handle() methods.
+
 ## Examples
+
 See the [./samples/](./samples/) folder for more.
 
 ### Real Example - Binance
-See [./samples/binance.js](./samples/binance.js)
+
+See [./samples/binance.ts](./samples/binance.ts)
 
 ### Real Example - Bybit
+
 - Import modules
 - Prepare OrderBooks store instance
 - Connect to OrderBooks websockets
 - Map event properties to expected key:value pairs
 - Feed mapped snapshot and delta events into OrderBooks.handle() methods
 
-See [./samples/bybit.js](./samples/bybit.js)
+See [./samples/bybit.ts](./samples/bybit.ts)
 
 Example output with `print()` calls to output book state to console:
+
 ```
 ---------- BTCUSD ask:bid 9240:9239.5 & spread: 0.01%
 ┌─────────┬──────────┬────────┬────────┬─────────┐
@@ -147,6 +167,7 @@ Example output with `print()` calls to output book state to console:
 ```
 
 ## Accessing State
+
 Access orderbook state using the OrderBooksStore.
 
 ```javascript
@@ -169,7 +190,9 @@ const currentSpread = btcORderBook.getSpreadPercent();
 ```
 
 ## Utility Methods
+
 The following ultity methods are exposed for each book:
+
 ```javascript
 const btcOrderBook = OrderBooks.getBook('BTCUSD');
 
