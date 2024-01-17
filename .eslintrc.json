@@ -1,14 +1,11 @@
 {
   "root": true,
   "plugins": ["@typescript-eslint"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "files": ["*.ts", "*.tsx"], // Your TypeScript files extension
-    "project": ["tsconfig.json"],
+    "project": ["tsconfig.json", "tsconfig.samples.json"],
     "projectFolderIgnoreList": ["/node_modules/", "/dist/", "/scripts/"]
   },
   "rules": {
