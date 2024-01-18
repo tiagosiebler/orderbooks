@@ -5,8 +5,8 @@ import { OrderBookLevelState } from './OrderBookLevel';
  * Store for multi-symbol orderbooks, grouped into one book (OrderBook) per symbol
  * @class OrderBooksStore
  */
-export class OrderBooksStore {
-  books: Record<string, OrderBook> = {};
+export class OrderBooksStore<ExtraStateType = unknown> {
+  books: Record<string, OrderBook<ExtraStateType>> = {};
   traceLog: boolean;
   shouldCheckTimestamp: boolean;
   maxDepth: number;
@@ -22,12 +22,12 @@ export class OrderBooksStore {
    * @param {string} symbol
    * @returns {OrderBook} created for symbol if not already tracked
    */
-  public getBook(symbol: string): OrderBook {
+  public getBook(symbol: string): OrderBook<ExtraStateType> {
     if (this.books[symbol]) {
       return this.books[symbol];
     }
 
-    this.books[symbol] = new OrderBook(symbol, {
+    this.books[symbol] = new OrderBook<ExtraStateType>(symbol, {
       checkTimestamps: this.shouldCheckTimestamp,
       maxDepth: this.maxDepth,
     });
@@ -47,7 +47,7 @@ export class OrderBooksStore {
     symbol: string,
     data: OrderBookLevelState[],
     timestamp: number = Date.now(),
-  ): OrderBook {
+  ): OrderBook<ExtraStateType> {
     if (this.traceLog) {
       console.log('handleSnapshot ', symbol, timestamp);
     }
@@ -70,7 +70,7 @@ export class OrderBooksStore {
     updateLevels: OrderBookLevelState[] | undefined,
     insertLevels: OrderBookLevelState[] | undefined,
     timestamp: number = Date.now(),
-  ): OrderBook {
+  ): OrderBook<ExtraStateType> {
     if (this.traceLog) {
       console.log('handleDelta ', symbol, timestamp);
     }

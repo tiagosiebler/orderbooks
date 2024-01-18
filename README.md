@@ -173,6 +173,10 @@ Access orderbook state using the OrderBooksStore.
 ```javascript
 const btcOrderBook = OrderBooks.getBook('BTCUSD');
 
+// Get an array dump of the current orderbook state (similar to what you see on exchange websites)
+const btcOrderBookState = btcOrderBook.getBookState();
+console.log('Current book state: ', JSON.stringify(btcOrderBookState));
+
 const bestBid = btcOrderBook.getBestBid();
 // bestBid = 9239.5
 
