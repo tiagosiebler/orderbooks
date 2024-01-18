@@ -1,0 +1,16 @@
+{
+  // Comments are supported, like tsconfig.json
+  "entryPoints": ["src/index.ts"],
+  "out": "docs",
+  "includeVersion": true,
+  "sourceLinkExternal": true,
+  "sidebarLinks": {
+    "Orderbooks NPM": "https://npmjs.com/orderbooks"
+  },
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": false,
+    "includeFolders": true
+  },
+  "categorizeByGroup": false
+}
