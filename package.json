@@ -1,6 +1,6 @@
 {
   "name": "orderbooks",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "In-memory state stores and handlers for caching multiple exchange:symbol orderbook states",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -14,7 +14,8 @@
     "build": "tsc",
     "build:clean": "npm run clean && npm run build",
     "build:watch": "npm run clean && tsc --watch",
-    "prepublishOnly": "npm run build:clean"
+    "prepublishOnly": "npm run build:clean",
+    "docs": "npx typedoc src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
     "ts-node": "^10.8.1",
+    "typedoc": "^0.25.7",
     "typescript": "^4.7.4"
   },
   "author": "Tiago Siebler",

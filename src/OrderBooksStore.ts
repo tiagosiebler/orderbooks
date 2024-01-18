@@ -1,8 +1,10 @@
-import OrderBook, { OrderBookOptions } from './OrderBook';
+import { OrderBook, OrderBookOptions } from './OrderBook';
 import { OrderBookLevelState } from './OrderBookLevel';
 
 /**
  * Store for multi-symbol orderbooks, grouped into one book (OrderBook) per symbol
+ *
+ * `ExtraStateType` is optional extra state you may want to store with each orderbook level, completely optional. Inject a union type if desired.
  * @class OrderBooksStore
  */
 export class OrderBooksStore<ExtraStateType = unknown> {
@@ -19,6 +21,7 @@ export class OrderBooksStore<ExtraStateType = unknown> {
   }
 
   /**
+   * Get the current orderbook store for a symbol. Automatically initialised (empty), if none exists yet.
    * @param {string} symbol
    * @returns {OrderBook} created for symbol if not already tracked
    */
