@@ -19,9 +19,9 @@ export interface OrderBookOptions {
  * Storage helper to store/track/manipulate the current state of an symbol's orderbook
  * @class OrderBook
  */
-export default class OrderBook {
+export default class OrderBook<ExtraStateType = unknown> {
   symbol: string;
-  book: OrderBookLevelState<undefined>[];
+  book: OrderBookLevelState<ExtraStateType>[];
   shouldCheckTimestamps: boolean;
   lastUpdateTimestamp: number;
   maxDepth: number;
@@ -36,11 +36,18 @@ export default class OrderBook {
   }
 
   /**
+   * Returns a cloned copy of the current orderbook state
+   */
+  public getBookState(): OrderBookLevelState<ExtraStateType>[] {
+    return structuredClone(this.book);
+  }
+
+  /**
    * @public Process orderbook snapshot, replacing existing book in memory
    * @param {OrderBookLevelState[]} current orderbook snapshot represented as array, where each child element is a level in the orderbook
    * @param {number} timestamp
    */
-  public handleSnapshot<ExtraStateType = unknown>(
+  public handleSnapshot(
     data: OrderBookLevelState<ExtraStateType>[],
     timestamp: number = Date.now(),
   ): this {
