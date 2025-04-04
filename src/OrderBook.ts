@@ -301,4 +301,79 @@ export class OrderBook<ExtraStateType = unknown> {
     // calculate spread in basis points
     return (1 - bid / ask) * 10000;
   }
+
+  /**
+   * Calculate expected slippage for a market order of a given size
+   * @param {number} orderSize - The size of the order in base units
+   * @param {string} side - 'Buy' or 'Sell' side of the order
+   * @returns {{ executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null} - The expected execution price and slippage
+   */
+  public calculateSlippage(orderSize: number, side: 'Buy' | 'Sell'): { executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null {
+    if (orderSize <= 0) {
+      throw new Error('Order size is not positive!');
+    }
+
+    // Filter the book to get only the levels for the relevant side
+    // For a buy order, we need the sell levels; for a sell order, we need the buy levels
+    const relevantLevels = this.book.filter(
+      (level) => level[EnumLevelProperty.side] === (side === 'Buy' ? 'Sell' : 'Buy')
+    );
+    
+    if (relevantLevels.length === 0) {
+      throw new Error('No relevant levels found in orderbook!');
+    }
+
+    // Sort the levels by price (ascending for buy orders, descending for sell orders)
+    const sortedLevels = [...relevantLevels].sort((a, b) => {
+      return side === 'Buy'
+        ? a[EnumLevelProperty.price] - b[EnumLevelProperty.price] // Buy orders fill from lowest ask to highest
+        : b[EnumLevelProperty.price] - a[EnumLevelProperty.price]; // Sell orders fill from highest bid to lowest
+    });
+
+    let remainingSize = orderSize;
+    let totalCost = 0;
+
+    // Simulate filling the order level by level
+    for (const level of sortedLevels) {
+      const price = level[EnumLevelProperty.price];
+      const availableQty = level[EnumLevelProperty.qty];
+      
+      const fillQty = Math.min(remainingSize, availableQty);
+      totalCost += fillQty * price;
+      remainingSize -= fillQty;
+      
+      if (remainingSize <= 0) {
+        break;
+      }
+    }
+
+    // If we couldn't fill the entire order, return null
+    if (remainingSize > 0) {
+      throw new Error('Could not fill the entire order');
+    }
+
+    // Calculate the average execution price
+    const executionPrice = totalCost / orderSize;
+    
+    // Calculate slippage relative to the best price
+    const bestPrice = side === 'Buy' ? this.getBestAsk() : this.getBestBid();
+    
+    if (!bestPrice) {
+      return null;
+    }
+    
+    // Calculate slippage percentage
+    const slippagePercent = side === 'Buy'
+      ? ((executionPrice / bestPrice) - 1) * 100 // For buys, execution price is higher than best price
+      : ((bestPrice / executionPrice) - 1) * 100; // For sells, execution price is lower than best price
+    
+    // Calculate slippage in basis points
+    const slippageBasisPoints = slippagePercent * 100;
+
+    return {
+      executionPrice,
+      slippagePercent,
+      slippageBasisPoints
+    };
+  }
 }

@@ -84,4 +84,19 @@ export class OrderBooksStore<ExtraStateType = unknown> {
       timestamp,
     );
   }
+
+  /**
+   * Calculate expected slippage for a market order of a given size for a specific symbol
+   * @param {string} symbol - The trading symbol
+   * @param {number} orderSize - The size of the order in base units
+   * @param {string} side - 'Buy' or 'Sell' side of the order
+   * @returns {{ executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null} - The expected execution price and slippage
+   */
+  public calculateSlippage(
+    symbol: string,
+    orderSize: number,
+    side: 'Buy' | 'Sell',
+  ) {
+    return this.getBook(symbol).calculateSlippage(orderSize, side);
+  }
 }
