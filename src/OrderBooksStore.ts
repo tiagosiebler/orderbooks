@@ -92,11 +92,11 @@ export class OrderBooksStore<ExtraStateType = unknown> {
    * @param {string} side - 'Buy' or 'Sell' side of the order
    * @returns {{ executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null} - The expected execution price and slippage
    */
-  public calculateSlippage(
+  public getEstimatedSlippage(
     symbol: string,
-    orderSize: number,
+    baseOrderSize: number,
     side: 'Buy' | 'Sell',
   ) {
-    return this.getBook(symbol).calculateSlippage(orderSize, side);
+    return this.getBook(symbol).getEstimatedSlippage(baseOrderSize, side);
   }
 }

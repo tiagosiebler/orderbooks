@@ -304,12 +304,12 @@ export class OrderBook<ExtraStateType = unknown> {
 
   /**
    * Calculate expected slippage for a market order of a given size
-   * @param {number} orderSize - The size of the order in base units
+   * @param {number} baseOrderSize - The size of the order in base units
    * @param {string} side - 'Buy' or 'Sell' side of the order
    * @returns {{ executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null} - The expected execution price and slippage
    */
-  public calculateSlippage(orderSize: number, side: 'Buy' | 'Sell'): { executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null {
-    if (orderSize <= 0) {
+  public getEstimatedSlippage(baseOrderSize: number, side: 'Buy' | 'Sell'): { executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null {
+    if (baseOrderSize <= 0) {
       throw new Error('Order size is not positive!');
     }
 
@@ -330,7 +330,7 @@ export class OrderBook<ExtraStateType = unknown> {
         : b[EnumLevelProperty.price] - a[EnumLevelProperty.price]; // Sell orders fill from highest bid to lowest
     });
 
-    let remainingSize = orderSize;
+    let remainingSize = baseOrderSize;
     let totalCost = 0;
 
     // Simulate filling the order level by level
@@ -353,7 +353,7 @@ export class OrderBook<ExtraStateType = unknown> {
     }
 
     // Calculate the average execution price
-    const executionPrice = totalCost / orderSize;
+    const executionPrice = totalCost / baseOrderSize;
     
     // Calculate slippage relative to the best price
     const bestPrice = side === 'Buy' ? this.getBestAsk() : this.getBestBid();
