@@ -11,8 +11,8 @@
   "author": "Tiago Siebler",
   "license": "MIT",
   "dependencies": {
-    "binance": "^2.13.3",
-    "bybit-api": "^3.11.0",
+    "binance": "^2.15.16",
+    "bybit-api": "^4.1.1",
     "orderbooks": "^1.1.6"
   }
 }
