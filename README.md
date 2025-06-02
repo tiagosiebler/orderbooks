@@ -15,29 +15,29 @@ A minimal set of utilities for handling orderbook snapshots and delta updates, w
 
 - [TSDoc Documentation (generated using typedoc via npm module)](https://tsdocs.dev/docs/orderbooks)
 
+<!-- template_related_projects -->
+
 ## Related projects
 
-Check out my related projects:
+Check out my related JavaScript/TypeScript/Node.js projects:
 
-- Try my connectors:
-  - [binance](https://www.npmjs.com/package/binance)
-  - [bybit-api](https://www.npmjs.com/package/bybit-api)
-  - [okx-api](https://www.npmjs.com/package/okx-api)
-  - [bitget-api](https://www.npmjs.com/package/bitget-api)
-  - [ftx-api](https://www.npmjs.com/package/ftx-api)
+- Try my REST API & WebSocket SDKs:
+  - [Bybit-api Node.js SDK](https://www.npmjs.com/package/bybit-api)
+  - [Okx-api Node.js SDK](https://www.npmjs.com/package/okx-api)
+  - [Binance Node.js SDK](https://www.npmjs.com/package/binance)
+  - [Gateio-api Node.js SDK](https://www.npmjs.com/package/gateio-api)
+  - [Bitget-api Node.js SDK](https://www.npmjs.com/package/bitget-api)
+  - [Kucoin-api Node.js SDK](https://www.npmjs.com/package/kucoin-api)
+  - [Coinbase-api Node.js SDK](https://www.npmjs.com/package/coinbase-api)
+  - [Bitmart-api Node.js SDK](https://www.npmjs.com/package/bitmart-api)
 - Try my misc utilities:
-  - [orderbooks](https://www.npmjs.com/package/orderbooks)
+  - [OrderBooks Node.js](https://www.npmjs.com/package/orderbooks)
+  - [Crypto Exchange Account State Cache](https://www.npmjs.com/package/accountstate)
 - Check out my examples:
-  - [awesome-crypto-examples](https://github.com/tiagosiebler/awesome-crypto-examples)
+  - [awesome-crypto-examples Node.js](https://github.com/tiagosiebler/awesome-crypto-examples)
+  <!-- template_related_projects_end -->
 
-## Contributions & Thanks
 
-If you found this project interesting or useful, [sponsor me](https://github.com/sponsors/tiagosiebler) on github, create accounts with my referral links:
-
-- [Bybit](https://www.bybit.com/en-US/register?affiliate_id=9410&language=en-US&group_id=0&group_type=1)
-- [Binance](https://www.binance.com/en/register?ref=20983262)
-
-For more ways to give thanks & support my efforts, visit [Contributions & Thanks](https://github.com/tiagosiebler/awesome-crypto-examples/wiki/Contributions-&-Thanks)!
 
 ## Project Contributions
 
@@ -207,6 +207,24 @@ btcOrderBook.print();
 btcOrderBook.reset();
 ```
 
+<!-- template_contributions -->
+
+## Contributions & Thanks
+
+Have my projects helped you? Share the love, there are many ways you can show your thanks:
+
+- Star & share my projects.
+- Are my projects useful? Sponsor me on Github and support my effort to maintain & improve them: https://github.com/sponsors/tiagosiebler
+- Have an interesting project? Get in touch & invite me to it.
+- Or buy me all the coffee:
+  - ETH(ERC20): `0xA3Bda8BecaB4DCdA539Dc16F9C54a592553Be06C` <!-- metamask -->
+
+<!-- template_contributions_end -->
+
+<!-- template_star_history -->
+
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=tiagosiebler/ftx-api,tiagosiebler/bybit-api,tiagosiebler/binance,tiagosiebler/orderbooks,tiagosiebler/okx-api,tiagosiebler/awesome-crypto-examples&type=Date)](https://star-history.com/#tiagosiebler/ftx-api&tiagosiebler/bybit-api&tiagosiebler/binance&tiagosiebler/orderbooks&tiagosiebler/okx-api&tiagosiebler/awesome-crypto-examples&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=tiagosiebler/bybit-api,tiagosiebler/okx-api,tiagosiebler/binance,tiagosiebler/bitget-api,tiagosiebler/bitmart-api,tiagosiebler/gateio-api,tiagosiebler/kucoin-api,tiagosiebler/coinbase-api,tiagosiebler/orderbooks,tiagosiebler/accountstate,tiagosiebler/awesome-crypto-examples&type=Date)](https://star-history.com/#tiagosiebler/bybit-api&tiagosiebler/okx-api&tiagosiebler/binance&tiagosiebler/bitget-api&tiagosiebler/bitmart-api&tiagosiebler/gateio-api&tiagosiebler/kucoin-api&tiagosiebler/coinbase-api&tiagosiebler/orderbooks&tiagosiebler/accountstate&tiagosiebler/awesome-crypto-examples&Date)
+
+<!-- template_star_history_end -->
