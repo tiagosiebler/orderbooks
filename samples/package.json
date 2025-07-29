@@ -13,6 +13,6 @@
   "dependencies": {
     "binance": "^2.15.16",
     "bybit-api": "^4.1.1",
-    "orderbooks": "^1.1.6"
+    "orderbooks": "^1.1.12"
   }
 }
