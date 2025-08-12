@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "binance": "^2.15.22",
-    "bybit-api": "^4.1.13",
+    "bybit-api": "^4.1.17",
     "orderbooks": "^1.1.12"
   }
 }
