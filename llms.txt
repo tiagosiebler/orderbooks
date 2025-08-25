@@ -1,0 +1,1002 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+The content has been processed where content has been compressed (code blocks are separated by ⋮---- delimiter), security check has been disabled.
+
+================================================================
+File Summary
+================================================================
+
+Purpose:
+--------
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+File Format:
+------------
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  a. A separator line (================)
+  b. The file path (File: path/to/file)
+  c. Another separator line
+  d. The full contents of the file
+  e. A blank line
+
+Usage Guidelines:
+-----------------
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+Notes:
+------
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: .github/, examples/apidoc/, docs/, test/, src/util/
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Content has been compressed - code blocks are separated by ⋮---- delimiter
+- Security check has been disabled - content may contain sensitive information
+- Files are sorted by Git change count (files with more changes are at the bottom)
+
+
+================================================================
+Directory Structure
+================================================================
+samples/
+  binance.ts
+  bybit.ts
+  package.json
+  README.md
+  slippage-test.ts
+src/
+  index.ts
+  OrderBook.ts
+  OrderBookLevel.ts
+  OrderBooksStore.ts
+.eslintrc.json
+.gitignore
+.npmignore
+.nvmrc
+.prettierrc
+index.js
+jsconfig.js
+package.json
+README.md
+tsconfig.json
+tsconfig.samples.json
+typedoc.json
+
+================================================================
+Files
+================================================================
+
+================
+File: samples/bybit.ts
+================
+import {
+  DefaultLogger,
+  isWsOrderbookEventV5,
+  WebsocketClient,
+  WSOrderbookEventV5,
+} from 'bybit-api';
+import {
+  OrderBookLevel,
+  OrderBookLevelState,
+  OrderBooksStore,
+} from 'orderbooks';
+// import { OrderBookLevel, OrderBookLevelState, OrderBooksStore } from '../src';
+⋮----
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+⋮----
+// connect to a websocket and relay orderbook events to handlers
+⋮----
+// console.log('message', JSON.stringify(message, null, 2));
+⋮----
+// parse orderbook messages, detect snapshot vs delta, and format properties using OrderBookLevel
+function handleOrderbookUpdate(message: WSOrderbookEventV5)
+⋮----
+// store inititial snapshot
+⋮----
+// log book state to screen
+⋮----
+// Seperate "deletes" from "updates/inserts"
+⋮----
+// Feed delta into orderbook store
+⋮----
+// log book state to screen
+
+================
+File: samples/slippage-test.ts
+================
+import {
+    DefaultLogger,
+    WebsocketClient
+} from 'bybit-api';
+import {
+    OrderBookLevel,
+    OrderBookLevelState,
+    OrderBooksStore,
+} from '../src';
+⋮----
+// Create orderbook store with appropriate options
+⋮----
+traceLog: true, // Set to true to see orderbook updates
+⋮----
+maxDepth: 500, // Ensure we have enough depth for testing
+⋮----
+// Disable verbose logging from the Bybit client
+⋮----
+// Connect to websocket and relay orderbook events to handlers
+⋮----
+// Flag to track if we've received the initial snapshot
+⋮----
+// The symbol we're tracking
+⋮----
+// Check if this is an orderbook message
+⋮----
+// Subscribe to the orderbook for BTCUSDT (50 levels depth)
+⋮----
+// Parse orderbook messages and update our local orderbook
+function handleOrderbookUpdate(message: any)
+⋮----
+// The format is usually orderbook.DEPTH.SYMBOL
+⋮----
+// Store initial snapshot
+⋮----
+// Separate "deletes" from "updates/inserts"
+⋮----
+// Feed delta into orderbook store
+⋮----
+// Calculate and display slippage for various order sizes after waiting for the orderbook to fill
+⋮----
+// Get the current book state for analysis
+⋮----
+// Display orderbook summary
+⋮----
+// Test order sizes (in BTC)
+⋮----
+// Calculate slippage for buy orders of different sizes
+⋮----
+// Calculate slippage for sell orders of different sizes
+⋮----
+// Close the websocket connection and exit
+⋮----
+// Just exit the process, the WebSocket will close automatically
+⋮----
+}, 15000); // Wait 15 seconds for the orderbook to fill with data
+
+================
+File: src/OrderBookLevel.ts
+================
+type Symbol = string;
+type Price = number;
+type Side = 'Buy' | 'Sell';
+type Quantity = number;
+⋮----
+export type OrderBookLevelState<T = unknown> = [
+  Symbol,
+  Price,
+  Side,
+  Quantity,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (T[] | any)?,
+];
+⋮----
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+⋮----
+/**
+ * One level in orderbook
+ * @param {string} symbol
+ * @param {number} price
+ * @param {string} [side='Buy'|'Sell']
+ * @param {number} qty asset at this level
+ */
+export function OrderBookLevel<T>(
+  symbol: string,
+  price: number,
+  side: Side,
+  qty: Quantity,
+  ...extraState: T[]
+)
+
+================
+File: .npmignore
+================
+samples
+
+================
+File: .nvmrc
+================
+v22.17.1
+
+================
+File: .prettierrc
+================
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+
+================
+File: index.js
+================
+
+
+================
+File: jsconfig.js
+================
+
+
+================
+File: tsconfig.samples.json
+================
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["es2017", "dom"],
+    "baseUrl": ".",
+    "outDir": "lib"
+  },
+  "include": ["src/**/*", "src/.ts", "samples/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*", "coverage", "doc"]
+}
+
+================
+File: typedoc.json
+================
+{
+  // Comments are supported, like tsconfig.json
+  "entryPoints": ["src/index.ts"],
+  "out": "docs",
+  "includeVersion": true,
+  "sourceLinkExternal": true,
+  "sidebarLinks": {
+    "Orderbooks NPM": "https://npmjs.com/orderbooks"
+  },
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": false,
+    "includeFolders": true
+  },
+  "categorizeByGroup": false
+}
+
+================
+File: samples/binance.ts
+================
+import {
+  getContextFromWsKey,
+  isWsPartialBookDepthEventFormatted,
+  MainClient,
+  OrderBookResponse,
+  WebsocketClient,
+} from 'binance';
+// import { OrderBookLevel, OrderBooksStore } from '../src';
+import { OrderBookLevel, OrderBooksStore } from 'orderbooks';
+⋮----
+// This example just dumps full snapshots into the orderbook store
+function handleOrderbookSnapshot(symbol: string, snapshot: OrderBookResponse)
+⋮----
+// combine bids and asks
+⋮----
+// store inititial snapshot
+⋮----
+// log book state to screen
+⋮----
+// connect to a websocket and relay orderbook events to handlers
+⋮----
+// https://github.com/tiagosiebler/binance/blob/master/examples/ws-public-spot-orderbook.ts#L34
+⋮----
+async function startOrderbookMonitoring()
+
+================
+File: .gitignore
+================
+lib
+node_modules
+repomix.sh
+
+================
+File: samples/README.md
+================
+# Examples
+
+These are demonstrations for how this library can be used. Contributions for more exchanges are warmly welcome.
+
+## Usage
+
+- tsc
+- cd into the samples folder
+- npm install
+- npm i -g ts-node
+- ts-node binance.ts
+
+================
+File: src/index.ts
+================
+
+
+================
+File: .eslintrc.json
+================
+{
+  "root": true,
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "files": ["*.ts", "*.tsx"], // Your TypeScript files extension
+    "project": ["tsconfig.json", "tsconfig.samples.json"],
+    "projectFolderIgnoreList": ["/node_modules/", "/dist/", "/scripts/"]
+  },
+  "rules": {
+    // Enabled: typescript
+    "no-param-reassign": ["error"],
+    "@typescript-eslint/await-thenable": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-expressions": "error",
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/prefer-namespace-keyword": "error",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/promise-function-async": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+
+    // Enabled: eslint
+    "default-case": "error",
+    "no-return-await": "error",
+    "eqeqeq": ["error", "smart"],
+    "id-denylist": ["error", "any", "Undefined", "undefined"],
+    "id-match": "error",
+    "no-caller": "error",
+    "no-cond-assign": "error",
+    "no-invalid-this": "error",
+    "no-debugger": "error",
+    "no-eval": "error",
+    "no-new-wrappers": "error",
+    "no-redeclare": "error",
+    "prefer-const": "error",
+    "prefer-object-spread": "error",
+    "radix": "error",
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true
+      }
+    ],
+
+    // Disabled: eslint
+    "guard-for-in": "off",
+    "no-empty": "off",
+    "no-magic-numbers": "off",
+    "no-null/no-null": "off",
+    "no-shadow": "off",
+    "no-trailing-spaces": "off",
+    "no-underscore-dangle": "off",
+    "no-var": "off",
+    "no-unused-vars": "off",
+    "no-case-declarations": "off",
+    "no-constant-condition": "off",
+    "no-dupe-class-members": "off"
+  }
+}
+
+================
+File: tsconfig.json
+================
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": false,
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["es2017", "dom"],
+    "baseUrl": ".",
+    "outDir": "lib"
+  },
+  "include": ["src/**/*", "src/.ts"],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "coverage",
+    "docs",
+    "samples"
+  ]
+}
+
+================
+File: src/OrderBooksStore.ts
+================
+import { OrderBook, OrderBookOptions } from './OrderBook';
+import { OrderBookLevelState } from './OrderBookLevel';
+⋮----
+/**
+ * Store for multi-symbol orderbooks, grouped into one book (OrderBook) per symbol
+ *
+ * `ExtraStateType` is optional extra state you may want to store with each orderbook level, completely optional. Inject a union type if desired.
+ * @class OrderBooksStore
+ */
+export class OrderBooksStore<ExtraStateType = unknown>
+⋮----
+constructor(options?: OrderBookOptions)
+⋮----
+/**
+   * Get the current orderbook store for a symbol. Automatically initialised (empty), if none exists yet.
+   * @param {string} symbol
+   * @returns {OrderBook} created for symbol if not already tracked
+   */
+public getBook(symbol: string): OrderBook<ExtraStateType>
+⋮----
+/**
+   * @public Store/replace existing orderbook state in-memory
+   *
+   * @param {string} symbol
+   * @param {Array} data current orderbook snapshot represented as array, where each child element is a level in the orderbook
+   * @param {number} timestamp
+   * @returns {OrderBook} store instance that handled this event
+   */
+public handleSnapshot(
+    symbol: string,
+    data: OrderBookLevelState[],
+    timestamp: number = Date.now(),
+): OrderBook<ExtraStateType>
+⋮----
+/**
+   * @public Update existing orderbook state in-memory
+   *
+   * @param {string} symbol
+   * @param {Array} deleteLevels - array with levels to delete
+   * @param {Array} updateLevels - array with levels to update
+   * @param {Array} insertLevels - array with levels to insert
+   * @param {number} timestamp
+   * @returns {OrderBook} store instance that handled this event
+   */
+public handleDelta(
+    symbol: string,
+    deleteLevels: OrderBookLevelState[] | undefined,
+    updateLevels: OrderBookLevelState[] | undefined,
+    insertLevels: OrderBookLevelState[] | undefined,
+    timestamp: number = Date.now(),
+): OrderBook<ExtraStateType>
+⋮----
+/**
+   * Calculate expected slippage for a market order of a given size for a specific symbol
+   * @param {string} symbol - The trading symbol
+   * @param {number} orderSize - The size of the order in base units
+   * @param {string} side - 'Buy' or 'Sell' side of the order
+   * @returns {{ executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null} - The expected execution price and slippage
+   */
+public getEstimatedSlippage(
+    symbol: string,
+    baseOrderSize: number,
+    side: 'Buy' | 'Sell',
+)
+
+================
+File: src/OrderBook.ts
+================
+import { OrderBookLevelState } from './OrderBookLevel';
+⋮----
+export interface OrderBookOptions {
+  checkTimestamps?: boolean;
+  maxDepth?: number;
+  /** Whether to console.log when a snapshot or delta is processed */
+  traceLog?: boolean;
+}
+⋮----
+/** Whether to console.log when a snapshot or delta is processed */
+⋮----
+/**
+ * Storage helper to store/track/manipulate the current state of an symbol's orderbook
+ * @class OrderBook
+ */
+export class OrderBook<ExtraStateType = unknown>
+⋮----
+constructor(symbol: string, options: OrderBookOptions =
+⋮----
+/**
+   * Returns a cloned copy of the current orderbook state
+   */
+public getBookState(): OrderBookLevelState<ExtraStateType>[]
+⋮----
+/**
+   * @public Process orderbook snapshot, replacing existing book in memory
+   * @param {OrderBookLevelState[]} data current orderbook snapshot represented as array, where each child element is a level in the orderbook
+   * @param {number} timestamp
+   */
+public handleSnapshot(
+    data: OrderBookLevelState<ExtraStateType>[],
+    timestamp: number = Date.now(),
+): this
+⋮----
+/**
+   * @public Process orderbook delta change, either deleting, updating or inserting level data into the existing book. Price is used on each level to find existing index in tracked book state.
+   *
+   * @param {Array} [deleteDelta=[]] levels to delete
+   * @param {Array} [upsertDelta=[]] levels to update (will automatically insert if level does not exist)
+   * @param {Array} [insertDelta=[]] levels to insert
+   * @param {number} timestamp
+   */
+public handleDelta(
+    deleteDelta: OrderBookLevelState[] = [],
+    upsertDelta: OrderBookLevelState[] = [],
+    insertDelta: OrderBookLevelState[] = [],
+    timestamp: number = Date.now(),
+): this
+⋮----
+/**
+   * @private replace item at index, mutating existing book store
+   */
+private replaceLevelAtIndex(i: number, level: OrderBookLevelState): this
+⋮----
+/**
+   * @private insert item, mutating existing book store
+   */
+private insertLevel(level: OrderBookLevelState): this
+⋮----
+/**
+   * @private find index of level in book, using "price" property as primary key
+   * @param {object} level
+   * @returns {number} index of level in book, if found, else -1
+   */
+private findIndexForSlice(level: OrderBookLevelState): number
+⋮----
+/**
+   * @public throw error if current timestamp is older than last updated timestamp
+   * @param {number} timestamp
+   */
+public checkTimestamp(timestamp: number)
+⋮----
+/** Sort orderbook in memory, lowest price last, highest price first */
+private sort(): this
+⋮----
+// sorts with lowest price last, highest price first
+⋮----
+/** trim orderbook in place to max depth, evenly across both sides */
+private trimToMaxDepth(): this
+⋮----
+/**
+   * Trim edges of orderbook to total target
+   *
+   * @param {number} [totalToTrim=0]
+   * @param {boolean} shouldTrimTop - if true, trim from array beginning (top = sells) else from array end (bottom = buys)
+   */
+private trimSideCount(
+    totalToTrim: number = 0,
+    shouldTrimTop?: boolean,
+): this
+⋮----
+/** Track last updated timestamp */
+private trackDidUpdate(timestamp: number = new Date().getTime()): this
+⋮----
+/** dump orderbook state to console */
+public print()
+⋮----
+// console.clear();
+⋮----
+// Map the book to a new format for console.table
+⋮----
+/** empty current orderbook store to free memory */
+public reset()
+⋮----
+/**
+   * get lowest sell order
+   * @param {number} [offset=0] offset from array centre (should be positive)
+   * @returns {number} lowest seller price
+   */
+public getBestAsk(offset: number = 0): number | null
+⋮----
+/**
+   * get highest buy order price
+   * @param {number} [offset=0] offset from array centre (should be positive)
+   * @returns {number} highest buyer price
+   */
+public getBestBid(offset: number = 0): number | null
+⋮----
+/**
+   * get current bid/ask spread percentage
+   * @param {number} [n=0] offset from centre of book
+   * @returns {number} percentage spread between best bid & ask
+   */
+public getSpreadPercent(n = 0): number | null
+⋮----
+/**
+   * get current bid/ask spread in basis points
+   * @param {number} [n=0] offset from centre of book
+   * @returns {number} spread between best bid & ask in basis points
+   */
+public getSpreadBasisPoints(n = 0): number | null
+⋮----
+// calculate spread in basis points
+⋮----
+/**
+   * Calculate expected slippage for a market order of a given size
+   * @param {number} baseOrderSize - The size of the order in base units
+   * @param {string} side - 'Buy' or 'Sell' side of the order
+   * @returns {{ executionPrice: number, slippagePercent: number, slippageBasisPoints: number } | null} - The expected execution price and slippage
+   */
+public getEstimatedSlippage(baseOrderSize: number, side: 'Buy' | 'Sell'):
+⋮----
+// Filter the book to get only the levels for the relevant side
+// For a buy order, we need the sell levels; for a sell order, we need the buy levels
+⋮----
+// Sort the levels by price (ascending for buy orders, descending for sell orders)
+⋮----
+? a[EnumLevelProperty.price] - b[EnumLevelProperty.price] // Buy orders fill from lowest ask to highest
+: b[EnumLevelProperty.price] - a[EnumLevelProperty.price]; // Sell orders fill from highest bid to lowest
+⋮----
+// Simulate filling the order level by level
+⋮----
+// If we couldn't fill the entire order, return null
+⋮----
+// Calculate the average execution price
+⋮----
+// Calculate slippage relative to the best price
+⋮----
+// Calculate slippage percentage
+⋮----
+? ((executionPrice / bestPrice) - 1) * 100 // For buys, execution price is higher than best price
+: ((bestPrice / executionPrice) - 1) * 100; // For sells, execution price is lower than best price
+⋮----
+// Calculate slippage in basis points
+
+================
+File: samples/package.json
+================
+{
+  "name": "orderbooks-samples",
+  "version": "1.0.0",
+  "description": "Sample implementations with the OrderBooks module",
+  "scripts": {
+    "binance": "node binance.js",
+    "bybit": "node bybit.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "author": "Tiago Siebler",
+  "license": "MIT",
+  "dependencies": {
+    "binance": "^2.15.22",
+    "bybit-api": "^4.1.17",
+    "orderbooks": "^1.1.12"
+  }
+}
+
+================
+File: README.md
+================
+# OrderBooks Store [![npm version](https://img.shields.io/npm/v/orderbooks.svg)][1] [![npm size](https://img.shields.io/bundlephobia/min/orderbooks.svg)][1] [![npm downloads](https://img.shields.io/npm/dt/orderbooks.svg)][1]
+
+[![CodeFactor](https://www.codefactor.io/repository/github/tiagosiebler/orderbooks/badge)](https://www.codefactor.io/repository/github/tiagosiebler/orderbooks)
+
+[1]: https://www.npmjs.com/package/orderbooks
+
+A minimal set of utilities for handling orderbook snapshots and delta updates, with bybit examples.
+
+## Issues & Discussion
+
+- Issues? Check the [issues tab](https://github.com/tiagosiebler/orderbooks/issues).
+- Discuss & collaborate with other node devs? Join our [Node.js Algo Traders](https://t.me/nodetraders) engineering community on telegram.
+
+## Documentation
+
+- [TSDoc Documentation (generated using typedoc via npm module)](https://tsdocs.dev/docs/orderbooks)
+
+<!-- template_related_projects -->
+
+## Related projects
+
+Check out my related JavaScript/TypeScript/Node.js projects:
+
+- Try my REST API & WebSocket SDKs:
+  - [Bybit-api Node.js SDK](https://www.npmjs.com/package/bybit-api)
+  - [Okx-api Node.js SDK](https://www.npmjs.com/package/okx-api)
+  - [Binance Node.js SDK](https://www.npmjs.com/package/binance)
+  - [Gateio-api Node.js SDK](https://www.npmjs.com/package/gateio-api)
+  - [Bitget-api Node.js SDK](https://www.npmjs.com/package/bitget-api)
+  - [Kucoin-api Node.js SDK](https://www.npmjs.com/package/kucoin-api)
+  - [Coinbase-api Node.js SDK](https://www.npmjs.com/package/coinbase-api)
+  - [Bitmart-api Node.js SDK](https://www.npmjs.com/package/bitmart-api)
+- Try my misc utilities:
+  - [OrderBooks Node.js](https://www.npmjs.com/package/orderbooks)
+  - [Crypto Exchange Account State Cache](https://www.npmjs.com/package/accountstate)
+- Check out my examples:
+  - [awesome-crypto-examples Node.js](https://github.com/tiagosiebler/awesome-crypto-examples)
+  <!-- template_related_projects_end -->
+
+
+
+## Project Contributions
+
+Contributions are very welcome, I will review any incoming pull requests. See the issues tab for todo items.
+
+## Features
+
+- Handle snapshot and delta orderbook events.
+- Track multiple symbol orderbooks.
+- Easily access best bid/ask prices.
+- Conveniently access the difference between the best bid and ask prices, with the spread represented in basis point units.
+- Easily keep orderbook depth trimmed to max depth.
+- Tiny module with 0 external dependencies.
+
+## Installation
+
+```
+npm install -save orderbooks
+```
+
+## Usage
+
+### Tracking
+
+- Import books store & level
+
+```javascript
+const { OrderBooksStore, OrderBookLevel } = require('orderbooks');
+```
+
+- Create instance of orderbooks store, to store multiple order books for a broker
+
+```javascript
+// all options are optional
+const options = {
+  // output traces on any events sent handled by book
+  traceLog: true,
+
+  // check current timestamp > last timestamp, else deny processing event
+  checkTimestamps: false,
+
+  // max size of orderbook (e.g 50 == 25 bids & 25 asks). Defaults to 250.
+  maxDepth: 50,
+};
+
+const OrderBooks = new OrderBooksStore(options);
+```
+
+- Feed snapshot and delta updates into OrderBooks.handle() methods.
+
+## Examples
+
+See the [./samples/](./samples/) folder for more.
+
+### Real Example - Binance
+
+See [./samples/binance.ts](./samples/binance.ts)
+
+### Real Example - Bybit
+
+- Import modules
+- Prepare OrderBooks store instance
+- Connect to OrderBooks websockets
+- Map event properties to expected key:value pairs
+- Feed mapped snapshot and delta events into OrderBooks.handle() methods
+
+See [./samples/bybit.ts](./samples/bybit.ts)
+
+Example output with `print()` calls to output book state to console:
+
+```
+---------- BTCUSD ask:bid 9240:9239.5 & spread: 0.01%
+┌─────────┬──────────┬────────┬────────┬─────────┐
+│ (index) │  symbol  │ price  │  side  │   qty   │
+├─────────┼──────────┼────────┼────────┼─────────┤
+│    0    │ 'BTCUSD' │  9252  │ 'Sell' │ 132623  │
+│    1    │ 'BTCUSD' │ 9251.5 │ 'Sell' │  82221  │
+│    2    │ 'BTCUSD' │  9251  │ 'Sell' │  34974  │
+│    3    │ 'BTCUSD' │ 9250.5 │ 'Sell' │  12842  │
+│    4    │ 'BTCUSD' │  9250  │ 'Sell' │ 550687  │
+│    5    │ 'BTCUSD' │ 9249.5 │ 'Sell' │  63371  │
+│    6    │ 'BTCUSD' │  9249  │ 'Sell' │ 200127  │
+│    7    │ 'BTCUSD' │ 9248.5 │ 'Sell' │ 129099  │
+│    8    │ 'BTCUSD' │  9248  │ 'Sell' │ 209061  │
+│    9    │ 'BTCUSD' │ 9247.5 │ 'Sell' │  30722  │
+│   10    │ 'BTCUSD' │  9247  │ 'Sell' │ 165469  │
+│   11    │ 'BTCUSD' │ 9246.5 │ 'Sell' │  97780  │
+│   12    │ 'BTCUSD' │  9246  │ 'Sell' │  95342  │
+│   13    │ 'BTCUSD' │ 9245.5 │ 'Sell' │  41319  │
+│   14    │ 'BTCUSD' │  9245  │ 'Sell' │ 227242  │
+│   15    │ 'BTCUSD' │ 9244.5 │ 'Sell' │ 167586  │
+│   16    │ 'BTCUSD' │  9244  │ 'Sell' │ 237029  │
+│   17    │ 'BTCUSD' │ 9243.5 │ 'Sell' │ 103426  │
+│   18    │ 'BTCUSD' │  9243  │ 'Sell' │ 126357  │
+│   19    │ 'BTCUSD' │ 9242.5 │ 'Sell' │ 165034  │
+│   20    │ 'BTCUSD' │  9242  │ 'Sell' │ 264286  │
+│   21    │ 'BTCUSD' │ 9241.5 │ 'Sell' │ 261200  │
+│   22    │ 'BTCUSD' │  9241  │ 'Sell' │ 233533  │
+│   23    │ 'BTCUSD' │ 9240.5 │ 'Sell' │ 399512  │
+│   24    │ 'BTCUSD' │  9240  │ 'Sell' │ 1397987 │
+│   25    │ 'BTCUSD' │ 9239.5 │ 'Buy'  │  1132   │
+│   26    │ 'BTCUSD' │  9239  │ 'Buy'  │ 234214  │
+│   27    │ 'BTCUSD' │ 9238.5 │ 'Buy'  │  58320  │
+│   28    │ 'BTCUSD' │  9238  │ 'Buy'  │  17094  │
+│   29    │ 'BTCUSD' │ 9237.5 │ 'Buy'  │  50980  │
+│   30    │ 'BTCUSD' │  9237  │ 'Buy'  │  13449  │
+│   31    │ 'BTCUSD' │ 9236.5 │ 'Buy'  │  2608   │
+│   32    │ 'BTCUSD' │  9236  │ 'Buy'  │  53742  │
+│   33    │ 'BTCUSD' │ 9235.5 │ 'Buy'  │ 106681  │
+│   34    │ 'BTCUSD' │  9235  │ 'Buy'  │  48653  │
+│   35    │ 'BTCUSD' │ 9234.5 │ 'Buy'  │  76188  │
+│   36    │ 'BTCUSD' │  9234  │ 'Buy'  │ 215664  │
+│   37    │ 'BTCUSD' │ 9233.5 │ 'Buy'  │ 169265  │
+│   38    │ 'BTCUSD' │  9233  │ 'Buy'  │  30296  │
+│   39    │ 'BTCUSD' │ 9232.5 │ 'Buy'  │ 196676  │
+│   40    │ 'BTCUSD' │  9232  │ 'Buy'  │  82840  │
+│   41    │ 'BTCUSD' │ 9231.5 │ 'Buy'  │ 105854  │
+│   42    │ 'BTCUSD' │  9231  │ 'Buy'  │  1671   │
+│   43    │ 'BTCUSD' │ 9230.5 │ 'Buy'  │  25909  │
+│   44    │ 'BTCUSD' │  9230  │ 'Buy'  │ 146198  │
+│   45    │ 'BTCUSD' │ 9229.5 │ 'Buy'  │  95941  │
+│   46    │ 'BTCUSD' │  9229  │ 'Buy'  │  61212  │
+│   47    │ 'BTCUSD' │ 9228.5 │ 'Buy'  │  76966  │
+│   48    │ 'BTCUSD' │  9228  │ 'Buy'  │  93996  │
+│   49    │ 'BTCUSD' │ 9227.5 │ 'Buy'  │  44058  │
+└─────────┴──────────┴────────┴────────┴─────────┘
+```
+
+## Accessing State
+
+Access orderbook state using the OrderBooksStore.
+
+```javascript
+const btcOrderBook = OrderBooks.getBook('BTCUSD');
+
+// Get an array dump of the current orderbook state (similar to what you see on exchange websites)
+const btcOrderBookState = btcOrderBook.getBookState();
+console.log('Current book state: ', JSON.stringify(btcOrderBookState));
+
+const bestBid = btcOrderBook.getBestBid();
+// bestBid = 9239.5
+
+const secondBestBid = btcOrderBook.getBestBid(1);
+// secondBestBid = 9239
+
+const bestAsk = btcOrderBook.getBestAsk();
+// bestAsk = 9040
+
+const secondBestAsk = btcOrderBook.getBestAsk(1);
+// secondBestAsk = 9040.5
+
+const currentSpread = btcORderBook.getSpreadPercent();
+// currentSpread = 0.01
+```
+
+## Utility Methods
+
+The following ultity methods are exposed for each book:
+
+```javascript
+const btcOrderBook = OrderBooks.getBook('BTCUSD');
+
+// console.log current orderbook state
+btcOrderBook.print();
+
+// clear current orderbook to free memory
+btcOrderBook.reset();
+```
+
+<!-- template_contributions -->
+
+## Contributions & Thanks
+
+Have my projects helped you? Share the love, there are many ways you can show your thanks:
+
+- Star & share my projects.
+- Are my projects useful? Sponsor me on Github and support my effort to maintain & improve them: https://github.com/sponsors/tiagosiebler
+- Have an interesting project? Get in touch & invite me to it.
+- Or buy me all the coffee:
+  - ETH(ERC20): `0xA3Bda8BecaB4DCdA539Dc16F9C54a592553Be06C` <!-- metamask -->
+
+<!-- template_contributions_end -->
+
+<!-- template_star_history -->
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tiagosiebler/bybit-api,tiagosiebler/okx-api,tiagosiebler/binance,tiagosiebler/bitget-api,tiagosiebler/bitmart-api,tiagosiebler/gateio-api,tiagosiebler/kucoin-api,tiagosiebler/coinbase-api,tiagosiebler/orderbooks,tiagosiebler/accountstate,tiagosiebler/awesome-crypto-examples&type=Date)](https://star-history.com/#tiagosiebler/bybit-api&tiagosiebler/okx-api&tiagosiebler/binance&tiagosiebler/bitget-api&tiagosiebler/bitmart-api&tiagosiebler/gateio-api&tiagosiebler/kucoin-api&tiagosiebler/coinbase-api&tiagosiebler/orderbooks&tiagosiebler/accountstate&tiagosiebler/awesome-crypto-examples&Date)
+
+<!-- template_star_history_end -->
+
+================
+File: package.json
+================
+{
+  "name": "orderbooks",
+  "version": "1.1.14",
+  "description": "In-memory state stores and handlers for caching multiple exchange:symbol orderbook states",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/*",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf lib dist",
+    "build": "tsc",
+    "build:clean": "npm run clean && npm run build",
+    "build:watch": "npm run clean && tsc --watch",
+    "prepublishOnly": "npm run build:clean",
+    "docs": "npx typedoc src/index.ts",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagosiebler/orderbooks.git"
+  },
+  "keywords": [
+    "orderbook",
+    "orderbooks",
+    "order",
+    "book",
+    "crypto",
+    "trading",
+    "bybit",
+    "binance",
+    "bitmex",
+    "bitget",
+    "node"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.14.5",
+    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^8.29.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-require-extensions": "^0.1.3",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.8.1",
+    "typedoc": "^0.27.0",
+    "typescript": "^5.7.3"
+  },
+  "author": "Tiago Siebler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiagosiebler/orderbooks/issues"
+  },
+  "homepage": "https://github.com/tiagosiebler/orderbooks#readme"
+}
+
+
+
+
+
+================================================================
+End of Codebase
+================================================================
