@@ -1,11 +1,11 @@
 import {
-    DefaultLogger,
-    WebsocketClient
+  DefaultLogger,
+  WebsocketClient
 } from 'bybit-api';
 import {
-    OrderBookLevel,
-    OrderBookLevelState,
-    OrderBooksStore,
+  OrderBookLevel,
+  OrderBookLevelState,
+  OrderBooksStore,
 } from '../src';
 
 // Create orderbook store with appropriate options
@@ -16,7 +16,7 @@ const OrderBooks = new OrderBooksStore({
 });
 
 // Disable verbose logging from the Bybit client
-DefaultLogger.silly = () => {};
+DefaultLogger.trace = () => {};
 
 // Connect to websocket and relay orderbook events to handlers
 const ws = new WebsocketClient({
@@ -40,7 +40,7 @@ ws.on('response', (response) => {
   console.log('Received response:', response);
 });
 
-ws.on('error', (message) => {
+ws.on('exception', (message) => {
   console.error(`Bybit WS error:`, message);
 });
 
@@ -146,7 +146,7 @@ setTimeout(() => {
   console.log('===== BUY ORDER SLIPPAGE =====');
   testOrderSizes.forEach(size => {
     try {
-      const slippage = book.calculateSlippage(size, 'Buy');
+      const slippage = book.getEstimatedSlippage(size, 'Buy');
       if (slippage) {
         console.log(`Order Size: ${size} BTC`);
         console.log(`Execution Price: ${slippage.executionPrice.toFixed(2)} USDT`);
@@ -163,7 +163,7 @@ setTimeout(() => {
   console.log('\n===== SELL ORDER SLIPPAGE =====');
   testOrderSizes.forEach(size => {
     try {
-      const slippage = book.calculateSlippage(size, 'Sell');
+      const slippage = book.getEstimatedSlippage(size, 'Sell');
       if (slippage) {
         console.log(`Order Size: ${size} BTC`);
         console.log(`Execution Price: ${slippage.executionPrice.toFixed(2)} USDT`);

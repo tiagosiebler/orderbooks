@@ -17,7 +17,7 @@ const OrderBooks = new OrderBooksStore({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-DefaultLogger.silly = () => {};
+DefaultLogger.trace = () => {};
 
 // connect to a websocket and relay orderbook events to handlers
 const ws = new WebsocketClient({
@@ -32,8 +32,8 @@ ws.on('update', (message) => {
   }
 });
 
-ws.on('error', (message) => {
-  console.error(`bybit ws error: `, message);
+ws.on('exception', (message) => {
+  console.error(`bybit ws exception: `, message);
 });
 
 ws.subscribeV5(['orderbook.50.BTCUSDT'], 'spot');
@@ -41,7 +41,7 @@ ws.subscribeV5(['orderbook.50.BTCUSDT'], 'spot');
 // parse orderbook messages, detect snapshot vs delta, and format properties using OrderBookLevel
 function handleOrderbookUpdate(message: WSOrderbookEventV5) {
   const { topic, type, data, cts } = message;
-  const [topicKey, symbol] = topic.split('.');
+  const [topicKey, _depth, symbol] = topic.split('.');
 
   const bidsArray = data.b.map(([price, amount]) => {
     return OrderBookLevel(symbol, +price, 'Buy', +amount);
